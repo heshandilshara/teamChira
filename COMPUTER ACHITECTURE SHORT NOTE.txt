@@ -1,0 +1,8 @@
+What is an interrupt?
+An interrupt is a signal emitted by a device attached to a computer or from a program within the computer. It requires the operating system (OS) to stop and figure out what to do next. An interrupt temporarily stops or terminates a service or a current process. Most I/O devices have a bus control line called Interrupt Service Routine (ISR) for this purpose
+
+I. Hardware interrupt
+A hardware interrupt is an electronic signal from an external hardware device that indicates it needs attention from the OS.
+
+II. Software interrupts
+A software interrupt occurs when an application program terminates or requests certain services from the OS.
