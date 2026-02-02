@@ -1,0 +1,151 @@
+// Step 1: Interfaces for products
+
+// Shape interface
+interface Shape {
+    void draw();
+}
+
+// Color interface
+interface Color {
+    void fill();
+}
+
+// Step 2: Concrete Shape implementations
+
+class Circle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing Circle");
+    }
+}
+
+class Square implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing Square");
+    }
+}
+
+class Rectangle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing Rectangle");
+    }
+}
+
+// Step 3: Concrete Color implementations
+
+class Red implements Color {
+    @Override
+    public void fill() {
+        System.out.println("Filling with Red color");
+    }
+}
+
+class Green implements Color {
+    @Override
+    public void fill() {
+        System.out.println("Filling with Green color");
+    }
+}
+
+class Blue implements Color {
+    @Override
+    public void fill() {
+        System.out.println("Filling with Blue color");
+    }
+}
+
+// Step 4: Abstract Factory class
+
+abstract class AbstractFactory {
+    abstract Shape getShape(String shapeType);
+    abstract Color getColor(String color);
+}
+
+// Step 5: ShapeFactory concrete class
+
+class ShapeFactory extends AbstractFactory {
+    @Override
+    Shape getShape(String shapeType) {
+        if(shapeType == null) {
+            return null;
+        }
+        switch(shapeType.toLowerCase()) {
+            case "circle": return new Circle();
+            case "square": return new Square();
+            case "rectangle": return new Rectangle();
+            default: return null;
+        }
+    }
+    
+    @Override
+    Color getColor(String color) {
+        return null; // ShapeFactory doesn't create colors
+    }
+}
+
+// Step 6: ColorFactory concrete class
+
+class ColorFactory extends AbstractFactory {
+    @Override
+    Shape getShape(String shapeType) {
+        return null; // ColorFactory doesn't create shapes
+    }
+    
+    @Override
+    Color getColor(String color) {
+        if(color == null) {
+            return null;
+        }
+        switch(color.toLowerCase()) {
+            case "red": return new Red();
+            case "green": return new Green();
+            case "blue": return new Blue();
+            default: return null;
+        }
+    }
+}
+
+// Step 7: FactoryProducer class to get factories
+
+class FactoryProducer {
+    public static AbstractFactory getFactory(String choice) {
+        if(choice == null) {
+            return null;
+        }
+        switch(choice.toLowerCase()) {
+            case "shape": return new ShapeFactory();
+            case "color": return new ColorFactory();
+            default: return null;
+        }
+    }
+}
+
+// Step 8: Demo class with main method
+
+public class PatternDemo {
+    public static void main(String[] args) {
+        // Get shape factory
+        AbstractFactory shapeFactory = FactoryProducer.getFactory("shape");
+
+        // Get a Circle and draw it
+        Shape circle = shapeFactory.getShape("circle");
+        circle.draw();
+
+        // Get a Rectangle and draw it
+        Shape rectangle = shapeFactory.getShape("rectangle");
+        rectangle.draw();
+
+        // Get color factory
+        AbstractFactory colorFactory = FactoryProducer.getFactory("color");
+
+        // Get a Red color and fill it
+        Color red = colorFactory.getColor("red");
+        red.fill();
+
+        // Get a Blue color and fill it
+        Color blue = colorFactory.getColor("blue");
+        blue.fill();
+    }
+}
